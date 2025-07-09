@@ -1,42 +1,52 @@
 <template>
-  <div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-6">Каталог товаров</h1>
+  <div class="container mx-auto p-2">
+    <h1 class="text-xl font-bold mb-4">Каталог товаров</h1>
     
-    <div class="flex mb-6">
-      <div class="w-1/4 pr-4">
-        <h2 class="font-bold mb-2">Сортировка по:</h2>
-        <div class="bg-gray-100 p-4 rounded">
-          <div class="mb-4">
-            <h3 class="font-semibold mb-2">Товар по:</h3>
-            <select class="w-full p-2 border rounded">
-              <option>Цвет</option>
-              <option>Пол</option>
-              <option>Размер</option>
-              <option>Состав</option>
-            </select>
-          </div>
-          <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
+    <div class="flex gap-2">
+      <div class="w-1/5 min-w-[160px] sticky top-2 h-fit">
+        <div class="bg-gray-100 p-2 rounded">
+          <h2 class="font-bold mb-2 text-xs">Фильтры</h2>
+          <select class="w-full p-1 text-xs border rounded mb-1">
+            <option>Цвет</option>
+            <option>Пол</option>
+            <option>Размер</option>
+          </select>
+          <button class="w-full bg-blue-600 text-white py-1 text-xs rounded hover:bg-blue-700">
             Применить
           </button>
         </div>
       </div>
       
-      <div class="w-3/4">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="flex-1">
+        <div class="grid grid-cols-7 xs:grid-cols-5 sm:grid-cols-6 md:grid-cols-7 lg:grid-cols-8 xl:grid-cols-10 gap-7">
           <div 
             v-for="product in products" 
             :key="product.id" 
-            class="border rounded p-4 hover:shadow-md transition-shadow"
+            class="border rounded p-1 hover:shadow transition-all duration-100 flex flex-col"
+            style="height: 160px;"
           >
-            <h3 class="font-bold">{{ product.title }}</h3>
-            <p class="text-gray-600 mb-2">{{ product.brand }}</p>
-            <p class="text-lg font-semibold mb-2">{{ product.price }} ₽</p>
-            <button 
-              @click="addToCart(product)"
-              class="bg-green-600 text-white py-1 px-3 rounded hover:bg-green-700"
-            >
-              В корзину
-            </button>
+            <div class="h-[65%] bg-gray-50 mb-0.5 overflow-hidden flex items-center justify-center">
+              <img 
+                :src="product.thumbnail" 
+                :alt="product.title"
+                class="object-cover w-full h-full"
+                v-if="product.thumbnail"
+              >
+              <span v-else class="text-gray-400 text-[0.6rem]">Нет фото</span>
+            </div>
+            
+            <div class="flex-1 flex flex-col justify-between px-0.5">
+              <h3 class="font-medium text-[0.65rem] leading-tight truncate">{{ product.title }}</h3>
+              <div class="flex items-center justify-between">
+                <p class="text-[0.7rem] font-bold">{{ product.price }} Цена ₽</p>
+                <button 
+                  @click="addToCart(product)"
+                  class="bg-green-600 text-white text-[0.6rem] px-1 py-0.5 rounded hover:bg-green-700"
+                >
+                  Купить
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
